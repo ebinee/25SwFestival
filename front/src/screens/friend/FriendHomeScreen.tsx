@@ -21,8 +21,6 @@ const FriendHomeScreen = () => {
         size={20}
         onPress={() => navigation.navigate('AddFriendScreen')}
       />
-      <Text>친구 추가</Text>
-      <CustomText>친구 추가</CustomText>
     </Container>
   );
 };
