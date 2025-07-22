@@ -3,15 +3,15 @@ package com.springboot.be.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,14 +20,20 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(nullable = false)
+    private String imageUrl;
 
     @Lob
-    @Column(nullable = false)
     private String comment;
 
+    private Double latitude;
+    private Double longitude;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime takenAt;
+    private Integer sequence;
+    private Integer likeCount = 0;
+    private Integer commentCount = 0;
+
+    @OneToMany(mappedBy = "photo")
+    private List<PhotoLike> likes = new ArrayList<>();
 }
