@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class TravelPath {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,26 +22,11 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "marker_id", nullable = false)
-    private Marker marker;
+    private String pathName;
 
-    @Column(nullable = false, length = 100)
-    private String title;
-
-    @Lob
-    private String content;
-
-    private Boolean isShared = true;
-    private Boolean isDeleted = false;
+    @OneToMany(mappedBy = "travelPath")
+    private List<TravelPathPoint> points = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "post")
-    private List<Photo> photos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
-
 }
