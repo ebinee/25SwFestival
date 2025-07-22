@@ -13,7 +13,7 @@ public class TravelPathPoint {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_path_id", nullable = false)
+    @JoinColumn(name = "travel_path_id")
     private TravelPath travelPath;
 
     private double latitude;

@@ -26,9 +26,6 @@ public class Post {
     @JoinColumn(name = "marker_id", nullable = false)
     private Marker marker;
 
-    @Column(nullable = false, length = 100)
-    private String title;
-
     @Lob
     private String content;
 

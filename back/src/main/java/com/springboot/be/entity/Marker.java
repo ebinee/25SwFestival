@@ -12,23 +12,18 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Marker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Integer postCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "global_place_id")
     private GlobalPlace globalPlace;
 
-    private LocalDate visitDate;
-    private Boolean isShared = true;
-
     @OneToMany(mappedBy = "marker")
     private List<Post> posts = new ArrayList<>();
-
 }
