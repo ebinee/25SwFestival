@@ -99,9 +99,9 @@ return (
           <IconButton icon={plus} size={35} color={colors.white} onPress={() => navigation.navigate('AddFriendScreen')} />
         </FloatingButtonWrapper>
 
-        <FloatingButtonWrapper>
+        {/* <FloatingButtonWrapper>
           <IconButton icon={userAddIcon} size={30}  color= {colors.white} />
-        </FloatingButtonWrapper>
+        </FloatingButtonWrapper> */}
       </FloatingButtonContainer>
     </Container>
   );
