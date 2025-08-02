@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,10 @@ public class User {
     private String password;
 
     @Column(nullable = false, length = 45, unique = true)
-    private String nickname;
+    private String username;
+
+    @Column
+    private String role;
 
     @Column(name = "profile_image")
     private String profileImage;
@@ -49,4 +53,11 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
+    }
 }

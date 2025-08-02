@@ -33,3 +33,15 @@ server:
 jwt:
   secret: "${JWT_SECRET}"
   expirationMs: 86400000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    com.springboot.be : DEBUG
+
+bezkoder:
+  app:
+    jwtSecret: "${JWT_SECRET}"
+    jwtExpirationMs: 86400000
+

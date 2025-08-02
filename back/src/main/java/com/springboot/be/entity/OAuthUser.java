@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 public class OAuthUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "oauth_user_id")
+    private Long oauthuserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
