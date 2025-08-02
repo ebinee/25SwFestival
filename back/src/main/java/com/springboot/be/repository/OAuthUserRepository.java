@@ -1,4 +1,4 @@
 package com.springboot.be.repository;
 
-public class OAuthUserRepository {
+public interface OAuthUserRepository {
 }
