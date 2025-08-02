@@ -72,7 +72,7 @@ const TabNavigator = () => {
         name="FriendStack"
         component={FriendStack}
         options={{
-          tabBarLabel: renderLabel('친구'),
+          tabBarLabel: renderLabel('Friend'),
         }}
       />
 
