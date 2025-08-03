@@ -19,7 +19,6 @@ import { colors } from '../../styles/colors';
 type Navigation = NativeStackNavigationProp<FriendStackParam>;
 
 
-
   // 버튼 컨테이너
 const FloatingButtonContainer = styled.View`
   position: absolute;
@@ -38,8 +37,6 @@ const FloatingButtonWrapper = styled.View`
   align-items: center;
   margin-bottom: 8px; 
 `;
-
-
 
 const FriendHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
