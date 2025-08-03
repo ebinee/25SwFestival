@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { Container } from '../../styles/GlobalStyles';
 import CustomText from '../../components/ui/CustomText';
 import { colors } from '../../styles/colors';
+import SearchBar from './SearchBar.tsx'; 
 
 import {
   AcceptButton,
@@ -55,6 +56,7 @@ const FriendHomeScreen = () => {
     { id: '3', name: '김예빈' },
     { id: '4', name: '이수현' },
   ]);
+  const [search, setSearch] = useState(''); 
   const handleAccept = (id: string) =>
     setFriendRequests(prev => prev.filter(r => r.id !== id));
   const handleReject = (id: string) =>
@@ -65,12 +67,20 @@ const FriendHomeScreen = () => {
     width: 100%;
     background-color: ${colors.white};
     border-radius: 30px;
-    padding: 24px 0 30px 0;
+    padding: 8px 0 30px 0;
     margin: 18px 0 0 0;
+    elevation: 4;
   `;
 
   return (
     <Container>
+      <SearchBar
+        value={search}
+        onChangeText={setSearch}
+        placeholder="이메일로 친구 추가"
+        onClear={() => setSearch('')}
+        style={{ marginTop: 16, marginHorizontal: 10 }}
+      />
       <Block>
         {friendRequests.map(request => (
           <FriendRequestItem

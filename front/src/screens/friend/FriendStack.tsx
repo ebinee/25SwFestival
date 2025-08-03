@@ -19,17 +19,27 @@ const MyPageStack = () => {
       <Stack.Screen
         name="FriendHomeScreen"
         component={FriendHomeScreen}
-        options={{ title: '친구' }}
+        options={{ 
+          title: 'TRIPPIN',
+          headerTitleAlign: 'center' 
+        }}
       />
       <Stack.Screen
         name="AddFriendScreen"
         component={AddFriendScreen}
-        options={{ title: '친구 추가' }}
+        options={{ 
+          title: 'Add Friend',
+          headerTitleAlign: 'center'
+        }}
       />
       <Stack.Screen
         name="FriendListScreen"
         component={FriendListScreen}
-        options={{ title: '친구 목록' }}
+        options={{ 
+          title: 'Friend List' ,
+          headerTitleAlign: 'center' 
+        }}
+
       />
 
     </Stack.Navigator>

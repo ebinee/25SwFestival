@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from '../../styles/GlobalStyles';
 import CustomText from '../../components/ui/CustomText';
 import IconButton from '../../components/buttons/IconButton';
 import plus from '../../assets/images/icon/plus.png';
 import listIcon from '../../assets/images/icon/listIcon.png'; 
-import userAddIcon from '../../assets/images/icon/userAddIcon.png'; 
+// import userAddIcon from '../../assets/images/icon/userAddIcon.png'; 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FriendStackParam } from './FriendStack';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,7 @@ import heartIcon from '../../assets/images/icon/heart.png';
 import chatIcon from '../../assets/images/icon/chat.png';
 import styled from 'styled-components/native';
 import { colors } from '../../styles/colors';
-
+import SearchBar from './SearchBar.tsx'; 
 
 type Navigation = NativeStackNavigationProp<FriendStackParam>;
 
@@ -40,6 +40,7 @@ const FloatingButtonWrapper = styled.View`
 
 const FriendHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
+  const [email, setEmail] = useState('');
 
   const posts = [
     {
@@ -60,6 +61,14 @@ const FriendHomeScreen = () => {
 
 return (
   <Container>
+    <SearchBar
+      value={email}
+      onChangeText={setEmail}
+      placeholder="이메일로 친구 추가"
+      onClear={() => setEmail('')}
+      style={{ marginTop: 16, marginHorizontal: 10 }}
+    />
+
     <ScrollView
       showsVerticalScrollIndicator={false}
     >
