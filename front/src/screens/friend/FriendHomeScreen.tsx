@@ -8,37 +8,16 @@ import userAddIcon from '../../assets/images/icon/userAddIcon.png';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FriendStackParam } from './FriendStack';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
-import { Image } from 'react-native';
+import { Text, View ,Image, ScrollView} from 'react-native';
 import { Block, Header, UserInfo, ProfileImage, UserName, IconGroup, IconImage } from '../../styles/write.ts';
-import plusIcon from '../../assets/images/icon/plus.png';
 import heartIcon from '../../assets/images/icon/heart.png';
 import chatIcon from '../../assets/images/icon/chat.png';
 import styled from 'styled-components/native';
 import { colors } from '../../styles/colors';
-import { ScrollView } from 'react-native';
 
 
 type Navigation = NativeStackNavigationProp<FriendStackParam>;
 
-
-const FriendHomeScreen = () => {
-  const navigation = useNavigation<Navigation>();
-
-  const posts = [
-    {
-      userName: '지윤아',
-      text: '대전에 있는 야구장에 갔다. 날이 더웠지만 맛있는 음식도 먹고 좋아하는 팀의 경기도 봐서 재밌었던 하루였다',
-    },
-    {
-      userName: '김민서',
-      text: '깔끔한 맛과 분위기가 좋아 자주 가는 맛집입니다.',
-    },
-    {
-      userName: '김예빈',
-      text: '한 입 먹는 순간 인상이 바뀌는 집. 재료 본연의 맛이 살아 있어서 자극적이지 않다.',
-    },
-  ];
 
 
   // 버튼 컨테이너
@@ -59,6 +38,26 @@ const FloatingButtonWrapper = styled.View`
   align-items: center;
   margin-bottom: 8px; 
 `;
+
+
+
+const FriendHomeScreen = () => {
+  const navigation = useNavigation<Navigation>();
+
+  const posts = [
+    {
+      userName: '지윤아',
+      text: '대전에 있는 야구장에 갔다. 날이 더웠지만 맛있는 음식도 먹고 좋아하는 팀의 경기도 봐서 재밌었던 하루였다',
+    },
+    {
+      userName: '김민서',
+      text: '깔끔한 맛과 분위기가 좋아 자주 가는 맛집입니다.',
+    },
+    {
+      userName: '김예빈',
+      text: '한 입 먹는 순간 인상이 바뀌는 집. 재료 본연의 맛이 살아 있어서 자극적이지 않다.',
+    },
+  ];
 
 
 
@@ -99,9 +98,6 @@ return (
           <IconButton icon={plus} size={35} color={colors.white} onPress={() => navigation.navigate('AddFriendScreen')} />
         </FloatingButtonWrapper>
 
-        {/* <FloatingButtonWrapper>
-          <IconButton icon={userAddIcon} size={30}  color= {colors.white} />
-        </FloatingButtonWrapper> */}
       </FloatingButtonContainer>
     </Container>
   );
