@@ -38,11 +38,6 @@ public class MarkerController {
         return ApiResponse.success("좌표 기반 마커 검색 결과", markers);
     }
 
-    @GetMapping("/markers")
-    public ApiResponse<List<MarkerSummaryDto>> getAllMarkers() {
-        return ApiResponse.success("전체 마커 조회 성공", markerService.getAllMarkers());
-    }
-
     @GetMapping("/markers/popular")
     public ApiResponse<List<MarkerSummaryDto>> getPopularMarkers() {
         return ApiResponse.success("인기 마커 조회 성공", markerService.getPopularMarkers());

@@ -15,10 +15,10 @@ public class GlobalExceptionHandler {
         return ApiResponse.error(404, e.getMessage());
     }
 
-    @ExceptionHandler(IllegalAccessException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiResponse<?> handleBadRequest(IllegalAccessException e) {
-        return ApiResponse.error(400, e.getMessage());
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiResponse<?> handleBadRequest(UnauthorizedException e) {
+        return ApiResponse.error(401, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

@@ -4,10 +4,12 @@ import com.springboot.be.dto.response.MarkerDetailResponse;
 import com.springboot.be.dto.response.MarkerSummaryDto;
 import com.springboot.be.entity.GlobalPlace;
 import com.springboot.be.entity.Marker;
+import com.springboot.be.entity.PhotoLike;
 import com.springboot.be.entity.Post;
 import com.springboot.be.exception.NotFoundException;
 import com.springboot.be.repository.GlobalPlaceRepository;
 import com.springboot.be.repository.MarkerRepository;
+import com.springboot.be.repository.PhotoLikeRepository;
 import com.springboot.be.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class MarkerService {
     private final MarkerRepository markerRepository;
     private final PostRepository postRepository;
     private final GlobalPlaceRepository globalPlaceRepository;
+    private final PhotoLikeRepository photoLikeRepository;
 
     public List<MarkerSummaryDto> searchPlace(String keyword) {
         return markerRepository.findByGlobalPlace_PlaceNameContaining(keyword)
@@ -45,16 +48,17 @@ public class MarkerService {
         throw new NotFoundException("검색할 지역 정보를 입력하세요.");
     }
 
-    public List<MarkerSummaryDto> getAllMarkers() {
-        return convertToDto(markerRepository.findAll());
-    }
-
     public List<MarkerSummaryDto> getPopularMarkers() {
         return convertToDto(markerRepository.findPopularMarkers());
     }
 
-    public List<MarkerSummaryDto> getFavoriteMarkers() {
-        return List.of();
+    public List<MarkerSummaryDto> getFavoriteMarkers(Long userId) {
+        List<PhotoLike> likedPhotos = photoLikeRepository.findByUserIdWithMarker(userId);
+        List<Marker> likedMarkers = likedPhotos.stream()
+                .map(photoLike -> photoLike.getPhoto().getPost().getMarker())
+                .distinct()
+                .toList();
+        return convertToDto(likedMarkers);
     }
 
     public MarkerDetailResponse getMarkerDetail(Long markerId) {

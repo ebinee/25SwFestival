@@ -14,9 +14,9 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
     @Query(value = """
             SELECT m.* FROM marker m
             JOIN global_place gp ON m.global_place_id = gp.id
-            WHERE ST_Distance_Sphere(
-                POINT(gp.longitude, gp.latitude),
-                POINT(:lng, :lat)
+            WHERE ST_DistanceSphere(
+                ST_MakePoint(gp.longitude, gp.latitude),
+                ST_MakePoint(:lng, :lat)
             ) < :radius
             """, nativeQuery = true)
     List<Marker> findWithinRadius(@Param("lat") double lat, @Param("lng") double lng, @Param("radius") double radius);
