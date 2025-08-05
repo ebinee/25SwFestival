@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +25,26 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
-    @Column(nullable = false, length = 45, unique = true)
-    private String nickname;
+    @Column(nullable = false, length = 45)
+    private String username;
+
+    @Column
+    private String role;
 
     @Column(name = "profile_image")
     private String profileImage;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate; // 생년월일
+
+    @Column
+    private Integer age; // 나이
+
+    @Column(length = 10)
+    private String gender; // 성별 (e.g. "male", "female")
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -49,4 +63,13 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
+
+    public User(String username,  String password, String email,String gender, LocalDate birthDate) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
+        this.birthDate = birthDate;
+        this.gender = gender;
+    }
 }
