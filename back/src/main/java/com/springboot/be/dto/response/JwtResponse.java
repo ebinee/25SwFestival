@@ -2,7 +2,7 @@ package com.springboot.be.dto.response;
 
 public class JwtResponse {
 
-    ;private String accessToken;
+    private String accessToken;
     private String refreshToken;
     private String type =  "Bearer";
     private Long id;

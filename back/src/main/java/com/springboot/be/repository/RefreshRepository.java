@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RefreshRepository extends JpaRepository<RefreshEntity, Integer> {
+public interface RefreshRepository extends JpaRepository<RefreshEntity, Long> {
 
     Optional<RefreshEntity> findByUser(User user);
     void deleteByUser(User user);

@@ -24,10 +24,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
-    @Column(nullable = false, length = 45, unique = true)
+    @Column(nullable = false, length = 45)
     private String username;
 
     @Column

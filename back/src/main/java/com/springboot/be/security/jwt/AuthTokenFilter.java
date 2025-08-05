@@ -32,14 +32,30 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/api/auth")
+                || path.startsWith("/oauth2")
+                || path.startsWith("/login");
+    }
+
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        String uri = request.getRequestURI();
+        if (uri.startsWith("/oauth2/") || uri.startsWith("/login/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try{
             String jwt = parseJwt(request);
             if (jwt !=null && jwtUtils.validateJwtToken(jwt)){
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
+                String email = jwtUtils.getEmailFromJwtToken(jwt);
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication=
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

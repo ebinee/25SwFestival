@@ -53,9 +53,8 @@ public class AuthController {
         String userEmail = userDetails.getEmail();
         Long userId = userDetails.getId();
 
-        String accessToken = jwtUtils.generateToken(username, "access", 1000*60*15);
-        String refreshToken = jwtUtils.generateToken(username, "refresh", 1000L * 60 * 60 * 24 * 30);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String accessToken = jwtUtils.generateToken(userEmail, "access", 1000*60*15);
+        String refreshToken = jwtUtils.generateToken(userEmail, "refresh", 1000L * 60 * 60 * 24 * 30);
 
         User user = userRepository.findByEmail(userEmail).orElseThrow();
         refreshRepository.findByUser(user).ifPresent(refreshRepository::delete);
@@ -79,11 +78,6 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest){
-        if(userRepository.existsByUsername(signUpRequest.getUsername())){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
         if(userRepository.existsByEmail(signUpRequest.getEmail())){
             return ResponseEntity
                     .badRequest()

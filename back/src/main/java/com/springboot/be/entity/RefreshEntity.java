@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Getter
-@Setter
+@Getter //@setter 삭제
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,4 +25,11 @@ public class RefreshEntity {
 
    @Column(nullable = false)
     private LocalDateTime expiryDate;
+
+    public RefreshEntity(User user, String token, LocalDateTime expiryDate) {
+        this.user = user;
+        this.token = token;
+        this.expiryDate = expiryDate;
+    }
+
 }

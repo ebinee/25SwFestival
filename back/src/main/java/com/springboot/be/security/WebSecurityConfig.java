@@ -2,7 +2,10 @@ package com.springboot.be.security;
 
 import com.springboot.be.security.jwt.AuthEntryPointJwt;
 import com.springboot.be.security.jwt.AuthTokenFilter;
+import com.springboot.be.security.oauth2.CustomOauthService;
+import com.springboot.be.security.oauth2.OAuth2SuccessHandler;
 import com.springboot.be.security.services.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,20 +22,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableMethodSecurity
-// (securedEnabled = true,
-// jsr250Enabled = true,
-// prePostEnabled = true) // by default
-public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+public class WebSecurityConfig {
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
-
-    @Autowired
-    public AuthTokenFilter authTokenFilter;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final AuthEntryPointJwt unauthorizedHandler;
+    public final AuthTokenFilter authTokenFilter;
+    private final CustomOauthService customOauthService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
 //  @Override
 //  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -72,10 +71,21 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/oauth2/**").permitAll()
+                                .requestMatchers("/login/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/api/user/has-survey").permitAll()
                                 .anyRequest().authenticated()
+
+                )
+
+                .oauth2Login(oauth2 ->oauth2
+                                .userInfoEndpoint(userInfo->userInfo
+                                        .userService(customOauthService)
+                                )
+                                .successHandler(oAuth2SuccessHandler)
                 );
+
 
         http.authenticationProvider(authenticationProvider());
 
