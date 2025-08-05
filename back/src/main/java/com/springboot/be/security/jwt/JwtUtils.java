@@ -21,18 +21,6 @@ public class JwtUtils {
     @Value("${bezkoder.app.jwtSecret}") //application.yaml 에서 jwt 서명용 키 불러옴
     private String jwtSecret;
 
-    @Value("${bezkoder.app.jwtExpirationMs}")
-    private int jwtExpirationMs;
-
-    public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-        return generateToken(userPrincipal.getUsername(), "access", jwtExpirationMs);
-    }
-
-    public String generateRefreshToken(UserDetailsImpl userPrincipal, long expirationMs) {
-        return generateToken(userPrincipal.getUsername(), "refresh", expirationMs);
-    }
-
     public String generateToken(String username, String category, long expiration) {
 
         return Jwts.builder()

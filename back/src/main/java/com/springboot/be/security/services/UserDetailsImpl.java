@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.be.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+//Spring Security가 로그인 이후 현재 로그인한 사용자의 정보를 저장/조회할때 사용
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 

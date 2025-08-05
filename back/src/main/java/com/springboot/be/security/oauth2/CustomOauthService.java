@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -57,6 +56,9 @@ public class CustomOauthService extends DefaultOAuth2UserService {
                             .email(email)
                             .username(attributes.getName())
                             .role("ROLE_USER")
+                            .birthDate(attributes.getBirthDate())
+                            .age(attributes.getAge())
+                            .gender(attributes.getGender())
                             .build()));
 
             OAuthUser oAuthUser  = OAuthUser.builder()

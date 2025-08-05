@@ -2,6 +2,9 @@ package com.springboot.be.security.oauth2;
 
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +15,19 @@ public class OAuth2Attribute {
     public String providerId;
     public String email;
     private String name;
+    private LocalDate birthDate;
+    private String gender;
+    private Integer age;
     private Map<String, Object> attributes;
 
-    private OAuth2Attribute(String provider, String providerId, String email, String name, Map<String, Object> attributes) {
+    private OAuth2Attribute(String provider, String providerId, String email, String name, LocalDate birthDate, String gender, Integer age, Map<String, Object> attributes) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
         this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.age = age;
         this.attributes = attributes;
     }
 
@@ -41,14 +50,32 @@ public class OAuth2Attribute {
                 (String) attributes.get("sub"),
                 (String) attributes.get("email"),
                 (String) attributes.get("name"),
+                null,
+                null,
+                null,
                 attributes);
     }
 
     private static OAuth2Attribute ofNaver(String userNameAttributeName, Map<String, Object> response) {
+        String birthyear = (String) response.get("birthyear"); // "2003"
+        String birthday = ((String) response.get("birthday")).replace("-", ""); // "07-27" → "0727"
+        LocalDate birthDate = null;
+        Integer age = null;
+
+        if (birthyear != null && birthday != null) {
+            birthDate = LocalDate.parse(birthyear + birthday, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            age = Period.between(birthDate, LocalDate.now()).getYears();
+        }
+
+        String gender = (String) response.get("gender"); // "M" or "F"
+
         return new OAuth2Attribute("naver",
                 (String) response.get("id"),
                 (String) response.get("email"),
                 (String) response.get("name"),
+                birthDate,
+                gender,
+                age,
                 response);
     }
 
@@ -56,10 +83,26 @@ public class OAuth2Attribute {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
 
+        String birthyear = (String) kakaoAccount.get("birthyear"); // "2003"
+        String birthday = (String) kakaoAccount.get("birthday");   // "0727"
+        LocalDate birthDate = null;
+        Integer age = null;
+
+        if (birthyear != null && birthday != null) {
+            birthDate = LocalDate.parse(birthyear + birthday, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            age = Period.between(birthDate, LocalDate.now()).getYears();
+        }
+
+        String gender = (String) kakaoAccount.get("gender"); // "male" or "female"
+
+
         return new OAuth2Attribute("kakao",
                 String.valueOf(attributes.get("id")),
                 (String) kakaoAccount.get("email"),
                 (String) profile.get("nickname"),
+                birthDate,
+                gender,
+                age,
                 attributes);
     }
 
@@ -69,6 +112,9 @@ public class OAuth2Attribute {
         map.put("providerId", providerId);
         map.put("email", email);
         map.put("name", name);
+        map.put("birthDate", birthDate);
+        map.put("gender", gender);
+        map.put("age", age);
         return map;
     }
 
