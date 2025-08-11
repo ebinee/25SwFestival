@@ -10,7 +10,6 @@ public record MarkerSummaryDto(
         int postCount,
         Integer orderIndex
 ) {
-    // 기본 정보 반환
     public static MarkerSummaryDto from(Marker marker) {
         return new MarkerSummaryDto(
                 marker.getId(),

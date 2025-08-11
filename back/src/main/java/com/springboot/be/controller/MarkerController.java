@@ -1,10 +1,12 @@
 package com.springboot.be.controller;
 
 import com.springboot.be.dto.common.ApiResponse;
-import com.springboot.be.dto.response.MarkerDetailResponse;
+import com.springboot.be.dto.response.MarkerDetailDto;
 import com.springboot.be.dto.response.MarkerSummaryDto;
+import com.springboot.be.security.services.UserDetailsImpl;
 import com.springboot.be.service.MarkerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,12 +46,12 @@ public class MarkerController {
     }
 
     @GetMapping("/markers/favorites")
-    public ApiResponse<List<MarkerSummaryDto>> getFavoriteMarkers() {
-        return ApiResponse.success("찜한 마커 조회 성공", markerService.getFavoriteMarkers());
+    public ApiResponse<List<MarkerSummaryDto>> getFavoriteMarkers(@AuthenticationPrincipal UserDetailsImpl me) {
+        return ApiResponse.success("찜한 마커 조회 성공", markerService.getFavoriteMarkers(me.getId()));
     }
 
     @GetMapping("/markers/{markerId}/posts")
-    public ApiResponse<MarkerDetailResponse> getMarkerDetail(@PathVariable Long markerId) {
+    public ApiResponse<MarkerDetailDto> getMarkerDetail(@PathVariable Long markerId) {
         return ApiResponse.success("마커 게시글 조회 성공", markerService.getMarkerDetail(markerId));
     }
 }

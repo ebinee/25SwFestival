@@ -20,6 +20,10 @@ public class Marker {
 
     private Integer postCount;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "global_place_id")
     private GlobalPlace globalPlace;

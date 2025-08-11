@@ -27,7 +27,7 @@ public class Post {
     private Marker marker;
 
     @Lob
-    private String content;
+    private String title;
 
     private Boolean isShared = true;
     private Boolean isDeleted = false;
@@ -38,7 +38,5 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
 
 }
