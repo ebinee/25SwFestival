@@ -4,9 +4,11 @@ import { colors } from './colors';
 export const Block = styled.View`
     width: 100%;
     padding: 20px;
-    margin-vertical: 3px;
-    background-color: ${colors.white};
+    margin-vertical: 5px;
+    background-color: ${colors.sky};
     border-radius: 24px;
+    elevation: 4;
+
 `;
 
 export const Header = styled.View`
