@@ -2,7 +2,7 @@ package com.springboot.be.controller;
 
 import com.springboot.be.dto.common.ApiResponse;
 import com.springboot.be.dto.request.CommentCreateRequest;
-import com.springboot.be.dto.response.CommentResponse;
+import com.springboot.be.dto.response.CommentDto;
 import com.springboot.be.dto.response.PhotoDetailDto;
 import com.springboot.be.dto.response.PhotoSummaryDto;
 import com.springboot.be.security.services.UserDetailsImpl;
@@ -28,12 +28,12 @@ public class PhotoController {
     }
 
     @PostMapping("/{photoId}/comments")
-    public ApiResponse<CommentResponse> addComment(
+    public ApiResponse<CommentDto> addComment(
             @PathVariable Long photoId,
             @RequestBody CommentCreateRequest request,
             @AuthenticationPrincipal UserDetailsImpl me
     ) {
-        CommentResponse created = commentService.addComment(photoId, me.getId(), request);
+        CommentDto created = commentService.addComment(photoId, me.getId(), request);
         return ApiResponse.created("댓글 작성 성공", created);
     }
 

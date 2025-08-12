@@ -1,7 +1,7 @@
 package com.springboot.be.service;
 
 import com.springboot.be.dto.request.CommentCreateRequest;
-import com.springboot.be.dto.response.CommentResponse;
+import com.springboot.be.dto.response.CommentDto;
 import com.springboot.be.entity.Comment;
 import com.springboot.be.entity.Photo;
 import com.springboot.be.entity.User;
@@ -22,13 +22,13 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public CommentResponse addComment(Long photoId, Long userId, CommentCreateRequest request) {
+    public CommentDto addComment(Long photoId, Long userId, CommentCreateRequest request) {
         Photo photo = photoRepository.findById(photoId)
                 .orElseThrow(() -> new NotFoundException("사진을 찾을 수 없습니다."));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다."));
         Comment comment = new Comment(photo, user, request.getComment());
         Comment saved = commentRepository.save(comment);
-        return CommentResponse.from(saved);
+        return CommentDto.from(saved);
     }
 }
