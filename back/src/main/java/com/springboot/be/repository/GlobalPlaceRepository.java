@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface GlobalPlaceRepository extends JpaRepository<GlobalPlace, Long> {
-    Optional<GlobalPlace> findByPlaceName(String placeName);
+    Optional<GlobalPlace> findByPlaceNameContainingIgnoreCase(String placeName);
 }

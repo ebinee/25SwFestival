@@ -27,7 +27,7 @@ public class Photo {
     private String imageUrl;
 
     @Lob
-    private String comment;
+    private String content;
 
     private Double latitude;
     private Double longitude;
@@ -38,7 +38,6 @@ public class Photo {
     private LocalDateTime takenAt;
     private Integer sequence;
     private Integer likeCount = 0;
-    private Integer commentCount = 0;
 
     @OneToMany(mappedBy = "photo")
     private List<PhotoLike> likes = new ArrayList<>();
@@ -53,16 +52,6 @@ public class Photo {
     public void decreaseLike() {
         if (this.likeCount > 0) {
             this.likeCount--;
-        }
-    }
-
-    public void increaseComment() {
-        this.commentCount++;
-    }
-
-    public void decreaseComment() {
-        if (this.commentCount > 0) {
-            this.commentCount--;
         }
     }
 }

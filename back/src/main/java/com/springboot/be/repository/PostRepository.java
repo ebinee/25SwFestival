@@ -8,5 +8,5 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByMarkerId(Long markerId);
 
-    List<Post> findByUserId(Long userId);
+    List<Post> findByUserIdOrderByCreatedAtAsc(Long userId);
 }

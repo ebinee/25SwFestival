@@ -2,9 +2,11 @@ package com.springboot.be.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor
@@ -13,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class OAuthUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long oauthId;
+    @Column(name = "oauth_user_id")
+    private Long oauthUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

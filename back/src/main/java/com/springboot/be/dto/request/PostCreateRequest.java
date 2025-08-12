@@ -12,8 +12,8 @@ public class PostCreateRequest {
 
     @Data
     public static class PhotoData {
-        private String ImageUrl;
-        private String comment;
+        private String imageUrl;
+        private String content;
         private Double latitude;
         private Double longitude;
         private String takenAt;

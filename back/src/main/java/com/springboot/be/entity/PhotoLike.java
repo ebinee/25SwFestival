@@ -24,4 +24,9 @@ public class PhotoLike {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    public PhotoLike(User user, Photo photo) {
+        this.user = user;
+        this.photo = photo;
+    }
 }

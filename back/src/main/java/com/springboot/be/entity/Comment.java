@@ -36,8 +36,9 @@ public class Comment {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Comment(Photo photo, String comment) {
+    public Comment(Photo photo, User user, String comment) {
         this.photo = photo;
+        this.user = user;
         this.comment = comment;
     }
 }

@@ -13,19 +13,19 @@ import java.util.List;
 public interface TravelPathPointRepository extends JpaRepository<TravelPathPoint, Long> {
 
     @Query("""
-                    SELECT new com.springboot.be.dto.response.MarkerSummaryDto(
-                                m.id,
-                                gp.placeName,
-                                gp.latitude,
-                                gp.longitude,
-                                m.postCount,
-                                tpp.sequence
-                    )
-                    FROM TravelPathPoint tpp
-                    JOIN tpp.marker m
-                    JOIN m.globalPlace gp
-                    WHERE tpp.travelPath.id = :travelPathId
-                    ORDER BY tpp.sequence ASC
+                SELECT new com.springboot.be.dto.response.MarkerSummaryDto(
+                            m.id,
+                            gp.placeName,
+                            gp.latitude,
+                            gp.longitude,
+                            m.postCount,
+                            tpp.sequence
+                )
+                FROM TravelPathPoint tpp
+                JOIN tpp.marker m
+                JOIN m.globalPlace gp
+                WHERE tpp.travelPath.id = :travelPathId
+                ORDER BY tpp.sequence ASC
             """)
     List<MarkerSummaryDto> findMarkerByTravelPath(@Param("travelPathId") Long travelPathId);
 }

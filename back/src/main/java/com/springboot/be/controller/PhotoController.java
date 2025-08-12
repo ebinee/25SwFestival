@@ -1,12 +1,15 @@
 package com.springboot.be.controller;
 
+import com.springboot.be.dto.common.ApiResponse;
 import com.springboot.be.dto.request.CommentCreateRequest;
 import com.springboot.be.dto.response.CommentResponse;
-import com.springboot.be.dto.response.PhotoDetailResponse;
+import com.springboot.be.dto.response.PhotoDetailDto;
+import com.springboot.be.dto.response.PhotoSummaryDto;
+import com.springboot.be.security.services.UserDetailsImpl;
 import com.springboot.be.service.CommentService;
 import com.springboot.be.service.PhotoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,30 +23,41 @@ public class PhotoController {
     private final CommentService commentService;
 
     @GetMapping("/{photoId}")
-    public ResponseEntity<PhotoDetailResponse> getPhoto(@PathVariable Long photoId) {
-        return ResponseEntity.ok(photoService.getPhotoDetail(photoId));
-    }
-
-    @GetMapping("/{photoId}/comments")
-    public ResponseEntity<List<CommentResponse>> getComment(@PathVariable Long photoId) {
-        return ResponseEntity.ok(commentService.getComments(photoId));
+    public ApiResponse<PhotoDetailDto> getPhoto(@PathVariable Long photoId) {
+        return ApiResponse.success("사진 상세 가져오기 성공", photoService.getPhotoDetail(photoId));
     }
 
     @PostMapping("/{photoId}/comments")
-    public ResponseEntity<Void> addComment(@PathVariable Long photoId, @RequestBody CommentCreateRequest request) {
-        commentService.addComment(photoId, request);
-        return ResponseEntity.ok().build();
+    public ApiResponse<CommentResponse> addComment(
+            @PathVariable Long photoId,
+            @RequestBody CommentCreateRequest request,
+            @AuthenticationPrincipal UserDetailsImpl me
+    ) {
+        CommentResponse created = commentService.addComment(photoId, me.getId(), request);
+        return ApiResponse.created("댓글 작성 성공", created);
     }
 
     @PostMapping("/{photoId}/like")
-    public ResponseEntity<Void> likePhoto(@PathVariable Long photoId) {
-        photoService.likePhoto(photoId);
-        return ResponseEntity.ok().build();
+    public ApiResponse<Void> likePhoto(
+            @PathVariable Long photoId,
+            @AuthenticationPrincipal UserDetailsImpl me
+    ) {
+        photoService.likePhoto(photoId, me.getId());
+        return ApiResponse.success("사진 좋아요 성공");
     }
 
     @DeleteMapping("/{photoId}/like")
-    public ResponseEntity<Void> unlikePhoto(@PathVariable Long photoId) {
-        photoService.unlikePhoto(photoId);
-        return ResponseEntity.ok().build();
+    public ApiResponse<Void> unlikePhoto(
+            @PathVariable Long photoId,
+            @AuthenticationPrincipal UserDetailsImpl me
+    ) {
+        photoService.unlikePhoto(photoId, me.getId());
+        return ApiResponse.success("사진 좋아요 삭제 성공");
+    }
+
+    @GetMapping("/favorite")
+    public ApiResponse<List<PhotoSummaryDto>> getFavoritePhotos(@AuthenticationPrincipal UserDetailsImpl user) {
+        List<PhotoSummaryDto> list = photoService.getFavoritePhotos(user.getId());
+        return ApiResponse.success("찜한 글 조회 성공", list);
     }
 }

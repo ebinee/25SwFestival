@@ -1,6 +1,10 @@
 package com.springboot.be.repository;
 
+import com.springboot.be.entity.Marker;
+import com.springboot.be.entity.Photo;
 import com.springboot.be.entity.PhotoLike;
+import com.springboot.be.entity.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,11 +14,26 @@ import java.util.List;
 public interface PhotoLikeRepository extends JpaRepository<PhotoLike, Long> {
 
     @Query("""
-                SELECT pl FROM PhotoLike pl
-                JOIN FETCH pl.photo p
-                JOIN FETCH p.post po
-                JOIN FETCH po.marker
-                WHERE pl.user.id = :userId
+                    SELECT distinct m
+                    FROM PhotoLike pl
+                    JOIN pl.photo p
+                    JOIN p.post po
+                    JOIN po.marker m
+                    WHERE pl.user.id = :userId
             """)
-    List<PhotoLike> findByUserIdWithMarker(@Param("userId") Long userId);
+    List<Marker> findDistinctMarkersByUserId(Long userId);
+
+    @EntityGraph(attributePaths = {"photo.post", "photo.post.user"})
+    @Query("""
+                SELECT p
+                FROM PhotoLike pl
+                JOIN pl.photo p
+                WHERE pl.user.id = :userId
+                ORDER BY p.id DESC
+            """)
+    List<Photo> findPhotoLikedByUser(@Param("userId") Long userId);
+
+    boolean existsByUserAndPhoto(User user, Photo photo);
+
+    int deleteByUserAndPhoto(User user, Photo photo);
 }

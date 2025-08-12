@@ -5,14 +5,14 @@ import com.springboot.be.entity.Post;
 
 import java.util.List;
 
-public record MarkerDetailResponse(
+public record MarkerDetailDto(
         Long id,
         String placeName,
         double latitude,
         double longitude,
         List<PostSummaryDto> posts) {
-    public static MarkerDetailResponse from(Marker marker, List<Post> posts) {
-        return new MarkerDetailResponse(
+    public static MarkerDetailDto from(Marker marker, List<Post> posts) {
+        return new MarkerDetailDto(
                 marker.getId(),
                 marker.getGlobalPlace().getPlaceName(),
                 marker.getGlobalPlace().getLatitude(),
