@@ -1,15 +1,18 @@
 package com.springboot.be.controller;
 
+import com.springboot.be.dto.common.ApiResponse;
+import com.springboot.be.dto.response.MarkerSummaryDto;
+import com.springboot.be.dto.response.TravelPathDto;
+import com.springboot.be.service.TravelPathService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/map/routes")
 @RequiredArgsConstructor
 public class TravelPathController {
-    /*
-
     private final TravelPathService travelPathService;
 
     @GetMapping
@@ -29,6 +32,4 @@ public class TravelPathController {
         List<MarkerSummaryDto> markers = travelPathService.getMarkersByRoute(routeId);
         return ApiResponse.success("특정 여행 경로 마커 조회 성공", markers);
     }
-
-     */
 }
