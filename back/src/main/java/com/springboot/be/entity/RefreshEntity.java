@@ -32,4 +32,8 @@ public class RefreshEntity {
         this.expiryDate = expiryDate;
     }
 
+    public void updateToken(String newToken) {
+        this.token = newToken;
+    }
+
 }

@@ -72,4 +72,7 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
     }
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
 }

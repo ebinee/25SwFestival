@@ -19,6 +19,23 @@ spring:
           lob:
             non_contextual_creation: true
 
+  data:
+    redis:
+      host: redis   # <-- compose 서비스 이름
+      port: 6379
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yunaji0824@gmail.com
+    password: zxcdzrfnewtvulcg   # 2단계 인증 켠 뒤 발급
+    properties:
+        mail:
+          smtp:
+            auth: true
+            starttls.enable: true
+
+
   security:
     oauth2:
       client:
