@@ -16,6 +16,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component
@@ -25,6 +28,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
     private final RefreshRepository refreshRepository;
+    private final OneTimeCodeService oneTimeCodeService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -51,9 +55,18 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 user.getEmail()
         );
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String responseBody = objectMapper.writeValueAsString(jwtResponse);
-        response.getWriter().write(responseBody);
+        //기존 브라우저에 response 띄우는 형식
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String responseBody = objectMapper.writeValueAsString(jwtResponse);
+//        response.getWriter().write(responseBody);
+
+        //소셜로그인 프론트 붙여보고 확인해봐야함.
+        String code = oneTimeCodeService.issue(jwtResponse, Duration.ofMinutes(5));
+
+        //앱 딥링크로 리다이렉트
+        //프론트쪽에서
+        String deeplink = "myapp://oauth2/callback?code=" + URLEncoder.encode(code, StandardCharsets.UTF_8);
+        response.sendRedirect(deeplink); // 바디 쓰지 말고 리다이렉트만
 
     }
 }
