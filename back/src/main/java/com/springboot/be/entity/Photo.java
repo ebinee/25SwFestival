@@ -3,6 +3,8 @@ package com.springboot.be.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Photo {
     @Id
@@ -24,16 +27,31 @@ public class Photo {
     private String imageUrl;
 
     @Lob
-    private String comment;
+    private String content;
 
     private Double latitude;
     private Double longitude;
+
+    @CreatedDate
     private LocalDateTime createdAt;
+
     private LocalDateTime takenAt;
     private Integer sequence;
     private Integer likeCount = 0;
-    private Integer commentCount = 0;
 
     @OneToMany(mappedBy = "photo")
     private List<PhotoLike> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "photo")
+    private List<Comment> comments = new ArrayList<>();
+
+    public void increaseLike() {
+        this.likeCount++;
+    }
+
+    public void decreaseLike() {
+        if (this.likeCount > 0) {
+            this.likeCount--;
+        }
+    }
 }
