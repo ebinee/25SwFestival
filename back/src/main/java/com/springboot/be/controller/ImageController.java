@@ -1,4 +1,4 @@
 package com.springboot.be.controller;
 
-public class PostController {
+public class ImageController {
 }

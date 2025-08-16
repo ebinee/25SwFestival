@@ -1,4 +1,4 @@
 package com.springboot.be.service;
 
-public class PostService {
+public class ImageService {
 }

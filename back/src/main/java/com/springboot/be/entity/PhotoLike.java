@@ -3,7 +3,6 @@ package com.springboot.be.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -22,11 +21,5 @@ public class PhotoLike {
     @JoinColumn(name = "photo_id")
     private Photo photo;
 
-    @CreatedDate
     private LocalDateTime createdAt;
-
-    public PhotoLike(User user, Photo photo) {
-        this.user = user;
-        this.photo = photo;
-    }
 }
