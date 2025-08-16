@@ -1,9 +1,9 @@
 package com.springboot.be.controller;
 
-import com.springboot.be.dto.response.JwtResponse;
 import com.springboot.be.dto.request.LoginRequest;
-import com.springboot.be.dto.response.MessageResponse;
 import com.springboot.be.dto.request.SignupRequest;
+import com.springboot.be.dto.response.JwtResponse;
+import com.springboot.be.dto.response.MessageResponse;
 import com.springboot.be.entity.RefreshEntity;
 import com.springboot.be.entity.User;
 import com.springboot.be.repository.RefreshRepository;
@@ -32,7 +32,6 @@ public class AuthController {
     @Autowired
     UserRepository userRepository; // 사용자 정보를 DB에서 조회/저장하기 위한 JPA Repository
 
-
     @Autowired
     PasswordEncoder encoder; // 비밀번호 암호화를 위한 PasswordEncoder
 
@@ -53,7 +52,7 @@ public class AuthController {
         String userEmail = userDetails.getEmail();
         Long userId = userDetails.getId();
 
-        String accessToken = jwtUtils.generateToken(userEmail, "access", 1000*60*15);
+        String accessToken = jwtUtils.generateToken(userEmail, "access", 1000 * 60 * 15);
         String refreshToken = jwtUtils.generateToken(userEmail, "refresh", 1000L * 60 * 60 * 24 * 30);
 
         User user = userRepository.findByEmail(userEmail).orElseThrow();
@@ -77,8 +76,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest){
-        if(userRepository.existsByEmail(signUpRequest.getEmail())){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
@@ -98,7 +97,6 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-
 
 
 }
