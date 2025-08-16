@@ -6,6 +6,9 @@ import CustomText from "../../components/ui/CustomText";
 import { Container } from "../../styles/GlobalStyles";
 import { Block ,IconImage} from '../../styles/write.ts';
 import IconButton from '../../components/buttons/IconButton';
+import profile from '../../assets/images/icon/profile.png';
+import ring from '../../assets/images/icon/ring.png';
+import company from '../../assets/images/icon/company.png';
 
 
 
@@ -52,8 +55,15 @@ const MyPageScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
 
         <HeaderRow>
-          <IconCircle />
+
           <CustomText style={{ fontSize: 16, fontWeight: "700" ,color:colors.blue}}>
+
+        <FloatingButtonContainer>
+          <FloatingButtonWrapper>
+            <IconButton icon={profile} size={25}  />
+          </FloatingButtonWrapper>
+        </FloatingButtonContainer>
+
             프로필 설정
           </CustomText>
         </HeaderRow>
@@ -65,8 +75,14 @@ const MyPageScreen = () => {
         </Block>
 
         <HeaderRow>
-          <IconCircle />
           <CustomText style={{ fontSize: 16, fontWeight: "700" ,color:colors.blue}}>
+
+        <FloatingButtonContainer>
+          <FloatingButtonWrapper>
+            <IconButton icon={ring} size={25}  />
+          </FloatingButtonWrapper>
+        </FloatingButtonContainer>
+
             알림 설정
           </CustomText>
         </HeaderRow>
@@ -80,8 +96,15 @@ const MyPageScreen = () => {
         </Block>
 
         <HeaderRow>
-          <IconCircle />
           <CustomText style={{ fontSize: 16, fontWeight: "700" ,color:colors.blue}}>
+
+        <FloatingButtonContainer>
+          <FloatingButtonWrapper>
+            <IconButton icon={company} size={25}  />
+          </FloatingButtonWrapper>
+        </FloatingButtonContainer>
+
+
             제휴 문의
           </CustomText>
         </HeaderRow>
@@ -103,8 +126,8 @@ const HeaderRow = styled.View`
 `;
 
 const IconCircle = styled.View`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 100px;
   background-color: ${colors.blue};
   align-items: center;
@@ -126,6 +149,28 @@ const ItemRow = styled.View`
   align-items: center;
   margin-bottom: 2px;
 `;
+
+  // 버튼 컨테이너
+const FloatingButtonContainer = styled.View`
+  position: absolute;
+  bottom: 8px;
+  right: 30px;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const FloatingButtonWrapper = styled.View`
+  background-color:  ${colors.blue};
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -10px; 
+  margin-right: 10px; 
+
+`;
+
 
 export { HeaderRow, IconCircle };
 export default MyPageScreen;

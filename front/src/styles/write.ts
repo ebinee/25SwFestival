@@ -34,7 +34,7 @@ export const ProfileImage = styled.View`
 export const UserName = styled.Text`
     margin-left: 12px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
 `;
 
 export const IconGroup = styled.View`
@@ -56,4 +56,21 @@ export const ItemContainer = styled.View`
     padding: 12px 0; 
     border-bottom-width: 0.5px;
     border-color: ${colors.gray2};  
+`;
+
+export const ContentRow = styled.View`
+    flex-direction: row;
+    align-items: flex-start;
+`;
+
+export const LeftImage = styled.Image`
+    width: 100px;
+    height: 100px;
+    margin-right: 14px;
+`;
+
+export const InfoArea = styled.View`
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
 `;
