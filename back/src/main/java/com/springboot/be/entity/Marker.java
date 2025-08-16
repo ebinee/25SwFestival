@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Marker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer postCount;
+    private int postCount = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -29,5 +28,13 @@ public class Marker {
     private GlobalPlace globalPlace;
 
     @OneToMany(mappedBy = "marker")
-    private List<Post> posts = new ArrayList<>();
+    private List<Photo> photos = new ArrayList<>();
+
+    public void increasePostCount() {
+        this.postCount++;
+    }
+
+    public void decreasePostCount() {
+        if (this.postCount > 0) this.postCount--;
+    }
 }

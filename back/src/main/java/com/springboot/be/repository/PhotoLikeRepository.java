@@ -17,11 +17,10 @@ public interface PhotoLikeRepository extends JpaRepository<PhotoLike, Long> {
                     SELECT distinct m
                     FROM PhotoLike pl
                     JOIN pl.photo p
-                    JOIN p.post po
-                    JOIN po.marker m
+                    JOIN p.marker m
                     WHERE pl.user.id = :userId
             """)
-    List<Marker> findDistinctMarkersByUserId(Long userId);
+    List<Marker> findDistinctMarkersByUserId(@Param("userId") Long userId);
 
     @EntityGraph(attributePaths = {"photo.post", "photo.post.user"})
     @Query("""
@@ -29,7 +28,7 @@ public interface PhotoLikeRepository extends JpaRepository<PhotoLike, Long> {
                 FROM PhotoLike pl
                 JOIN pl.photo p
                 WHERE pl.user.id = :userId
-                ORDER BY p.id DESC
+                ORDER BY p.createdAt DESC, p.id DESC
             """)
     List<Photo> findPhotoLikedByUser(@Param("userId") Long userId);
 

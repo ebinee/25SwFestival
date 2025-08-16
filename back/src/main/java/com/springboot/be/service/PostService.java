@@ -41,6 +41,8 @@ public class PostService {
         post.setMarker(marker);
         post.setTitle(request.getTitle());
         postRepository.save(post);
+        
+        marker.increasePostCount();
 
         for (PostCreateRequest.PhotoData photoData : request.getPhotos()) {
             Photo photo = new Photo();
