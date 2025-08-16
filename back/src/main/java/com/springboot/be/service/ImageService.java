@@ -1,4 +1,4 @@
 package com.springboot.be.service;
 
-public class CommentService {
+public class ImageService {
 }

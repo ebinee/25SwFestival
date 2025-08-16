@@ -22,7 +22,6 @@ public class MarkerService {
     private final PostRepository postRepository;
     private final GlobalPlaceRepository globalPlaceRepository;
     private final PhotoLikeRepository photoLikeRepository;
-    private final PhotoRepository photoRepository;
 
     public List<MarkerSummaryDto> searchPlace(String keyword) {
         if (keyword == null || keyword.isBlank()) {
@@ -52,7 +51,7 @@ public class MarkerService {
     }
 
     public List<MarkerSummaryDto> getPopularMarkers() {
-        return convertToDto(markerRepository.findTop10ByOrderByPostCountDesc());
+        return convertToDto(markerRepository.findPopularMarkers());
     }
 
     public List<MarkerSummaryDto> getFavoriteMarkers(Long userId) {
@@ -66,8 +65,8 @@ public class MarkerService {
     public MarkerDetailDto getMarkerDetail(Long markerId) {
         Marker marker = markerRepository.findById(markerId)
                 .orElseThrow(() -> new NotFoundException("해당 마커를 찾을 수 없습니다."));
-        List<Photo> photos = photoRepository.findByMarker_IdOrderByCreatedAtDesc(markerId);
-        return MarkerDetailDto.from(marker, photos);
+        List<Post> posts = postRepository.findByMarkerId(markerId);
+        return MarkerDetailDto.from(marker, posts);
     }
 
     private List<MarkerSummaryDto> convertToDto(List<Marker> markers) {

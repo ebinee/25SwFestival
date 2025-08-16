@@ -16,10 +16,6 @@ public class TravelPathPoint {
     @JoinColumn(name = "travel_path_id")
     private TravelPath travelPath;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "marker_id")
-    private Marker marker;
-
     private double latitude;
     private double longitude;
     private int sequence;
