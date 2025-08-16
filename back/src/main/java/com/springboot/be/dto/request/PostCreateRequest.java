@@ -7,15 +7,13 @@ import java.util.List;
 @Data
 public class PostCreateRequest {
     private String title;
-    private Long markerId;
     private List<PhotoData> photos;
 
     @Data
     public static class PhotoData {
         private String imageUrl;
         private String content;
-        private Double latitude;
-        private Double longitude;
+        private String address;
         private String takenAt;
     }
 }

@@ -16,7 +16,7 @@ public record MarkerSummaryDto(
                 marker.getGlobalPlace().getPlaceName(),
                 marker.getGlobalPlace().getLatitude(),
                 marker.getGlobalPlace().getLongitude(),
-                marker.getPostCount(),
+                marker.getPhotoCount(),
                 null
         );
     }
@@ -28,7 +28,7 @@ public record MarkerSummaryDto(
                 marker.getGlobalPlace().getPlaceName(),
                 marker.getGlobalPlace().getLatitude(),
                 marker.getGlobalPlace().getLongitude(),
-                marker.getPostCount(),
+                marker.getPhotoCount(),
                 orderIndex
         );
     }

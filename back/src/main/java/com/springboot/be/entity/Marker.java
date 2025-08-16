@@ -17,11 +17,7 @@ public class Marker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int postCount = 0;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private int photoCount = 0;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "global_place_id")
@@ -30,11 +26,15 @@ public class Marker {
     @OneToMany(mappedBy = "marker")
     private List<Photo> photos = new ArrayList<>();
 
-    public void increasePostCount() {
-        this.postCount++;
+    public void increasePhotoCount() {
+        this.photoCount++;
     }
 
     public void decreasePostCount() {
-        if (this.postCount > 0) this.postCount--;
+        if (this.photoCount > 0) this.photoCount--;
+    }
+
+    public void setGlobalPlace(GlobalPlace globalPlace) {
+        this.globalPlace = globalPlace;
     }
 }
