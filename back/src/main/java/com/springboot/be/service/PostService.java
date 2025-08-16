@@ -5,10 +5,7 @@ import com.springboot.be.dto.response.CommentDto;
 import com.springboot.be.dto.response.PhotoDetailDto;
 import com.springboot.be.dto.response.PostDetailDto;
 import com.springboot.be.dto.response.PostSummaryDto;
-import com.springboot.be.entity.Marker;
-import com.springboot.be.entity.Photo;
-import com.springboot.be.entity.Post;
-import com.springboot.be.entity.User;
+import com.springboot.be.entity.*;
 import com.springboot.be.exception.NotFoundException;
 import com.springboot.be.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -29,28 +26,52 @@ public class PostService {
     private final PhotoRepository photoRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final GlobalPlaceRepository globalPlaceRepository;
+    private final GeoCodingService geoCodingService;
 
     @Transactional
     public void createPost(PostCreateRequest request, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다."));
-        Marker marker = markerRepository.findById(request.getMarkerId())
-                .orElseThrow(() -> new IllegalArgumentException("마커를 찾을 수 없습니다."));
+
         Post post = new Post();
         post.setUser(user);
-        post.setMarker(marker);
         post.setTitle(request.getTitle());
         postRepository.save(post);
-        
-        marker.increasePostCount();
 
         for (PostCreateRequest.PhotoData photoData : request.getPhotos()) {
+            String address = photoData.getAddress();
+            if (address == null || address.isBlank()) {
+                throw new IllegalArgumentException("주소가 비어있습니다.");
+            }
+
+            GlobalPlace globalPlace = globalPlaceRepository
+                    .findByPlaceNameIgnoreCase(address)
+                    .orElseGet(() -> {
+                        PlaceInfo geo = geoCodingService.forwardGeocoding(address);
+
+                        GlobalPlace newPlace = new GlobalPlace();
+                        newPlace.setPlaceName(geo.getFormattedAddress());
+                        newPlace.setLatitude(geo.getLatitude());
+                        newPlace.setLongitude(geo.getLongitude());
+                        return globalPlaceRepository.save(newPlace);
+                    });
+
+            Marker marker = markerRepository
+                    .findByGlobalPlace(globalPlace)
+                    .orElseGet(() -> {
+                        Marker newMarker = new Marker();
+                        newMarker.setGlobalPlace(globalPlace);
+                        return markerRepository.save(newMarker);
+                    });
+
+            marker.increasePhotoCount();
+
             Photo photo = new Photo();
             photo.setPost(post);
+            photo.setMarker(marker);
             photo.setImageUrl(photoData.getImageUrl());
             photo.setContent(photoData.getContent());
-            photo.setLatitude(photoData.getLatitude());
-            photo.setLongitude(photoData.getLongitude());
 
             String takenAt = photoData.getTakenAt();
             if (takenAt != null && !takenAt.isBlank()) {
@@ -111,7 +132,7 @@ public class PostService {
             if (minDate == null || d.isBefore(minDate)) minDate = d;
             if (maxDate == null || d.isAfter(maxDate)) maxDate = d;
         }
-        if (minDate == null || maxDate == null) return null;
+        if (minDate == null) return null;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
         return minDate.format(formatter) + " ~ " + maxDate.format(formatter);
     }

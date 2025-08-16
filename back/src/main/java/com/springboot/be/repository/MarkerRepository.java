@@ -1,11 +1,13 @@
 package com.springboot.be.repository;
 
+import com.springboot.be.entity.GlobalPlace;
 import com.springboot.be.entity.Marker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MarkerRepository extends JpaRepository<Marker, Long> {
 
@@ -31,5 +33,7 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
             ORDER BY tpp.sequence ASC
             """)
     List<Marker> findMarkerWithTravelPaths(@Param("travelPathId") Long travelPathId);
+
+    Optional<Marker> findByGlobalPlace(GlobalPlace globalPlace);
 
 }
