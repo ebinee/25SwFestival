@@ -25,15 +25,6 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
 
     List<Marker> findTop10ByOrderByPhotoCountDesc();
 
-    @Query("""
-            SELECT DISTINCT m
-            FROM Marker m
-            JOIN TravelPathPoint tpp ON tpp.marker.id = m.id
-            WHERE tpp.travelPath.id = :travelPathId
-            ORDER BY tpp.sequence ASC
-            """)
-    List<Marker> findMarkerWithTravelPaths(@Param("travelPathId") Long travelPathId);
-
     Optional<Marker> findByGlobalPlace(GlobalPlace globalPlace);
 
 }

@@ -1,7 +1,6 @@
 package com.springboot.be.service;
 
 import com.springboot.be.dto.response.MarkerSummaryDto;
-import com.springboot.be.dto.response.PostSummaryDto;
 import com.springboot.be.repository.TravelPathPointRepository;
 import com.springboot.be.repository.TravelPathRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +13,6 @@ import java.util.List;
 public class TravelPathService {
     private final TravelPathRepository travelPathRepository;
     private final TravelPathPointRepository travelPathPointRepository;
-
-    public List<PostSummaryDto> getAllTravelPaths() {
-        return travelPathRepository.findAll()
-                .stream()
-                .map(path -> {
-                    return PostSummaryDto.from(path.getPost());
-                })
-                .toList();
-    }
 
     public List<List<MarkerSummaryDto>> getRecommendedRoutes(double lat, double lng, double radius) {
         return travelPathRepository.findRecommendedByLocation(lat, lng, radius)

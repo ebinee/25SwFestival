@@ -2,7 +2,6 @@ package com.springboot.be.controller;
 
 import com.springboot.be.dto.common.ApiResponse;
 import com.springboot.be.dto.response.MarkerSummaryDto;
-import com.springboot.be.dto.response.PostSummaryDto;
 import com.springboot.be.service.TravelPathService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TravelPathController {
     private final TravelPathService travelPathService;
-
-    @GetMapping
-    public ApiResponse<List<PostSummaryDto>> getAllRoutes() {
-        List<PostSummaryDto> routes = travelPathService.getAllTravelPaths();
-        return ApiResponse.success("전체 여행 경로 조회 성공", routes);
-    }
 
     @GetMapping("/recommended")
     public ApiResponse<List<List<MarkerSummaryDto>>> getRecommendedRoutes(
