@@ -23,7 +23,7 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
             """, nativeQuery = true)
     List<Marker> findWithinRadius(@Param("lat") double lat, @Param("lng") double lng, @Param("radius") double radius);
 
-    List<Marker> findTop10ByOrderByPostCountDesc();
+    List<Marker> findTop10ByOrderByPhotoCountDesc();
 
     @Query("""
             SELECT DISTINCT m

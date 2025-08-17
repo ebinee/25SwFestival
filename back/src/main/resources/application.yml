@@ -19,6 +19,14 @@ spring:
           lob:
             non_contextual_creation: true
 
+  data:
+    redis:
+      repositories:
+        enabled: false
+    jpa:
+      repositories:
+        enabled: true
+
   security:
     oauth2:
       client:

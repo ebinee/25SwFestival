@@ -52,7 +52,7 @@ public class MarkerService {
     }
 
     public List<MarkerSummaryDto> getPopularMarkers() {
-        return convertToDto(markerRepository.findTop10ByOrderByPostCountDesc());
+        return convertToDto(markerRepository.findTop10ByOrderByPhotoCountDesc());
     }
 
     public List<MarkerSummaryDto> getFavoriteMarkers(Long userId) {

@@ -2,7 +2,7 @@ package com.springboot.be.controller;
 
 import com.springboot.be.dto.common.ApiResponse;
 import com.springboot.be.dto.response.MarkerSummaryDto;
-import com.springboot.be.dto.response.TravelPathDto;
+import com.springboot.be.dto.response.PostSummaryDto;
 import com.springboot.be.service.TravelPathService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +16,18 @@ public class TravelPathController {
     private final TravelPathService travelPathService;
 
     @GetMapping
-    public ApiResponse<List<TravelPathDto>> getAllRoutes() {
-        List<TravelPathDto> routes = travelPathService.getAllTravelPaths();
+    public ApiResponse<List<PostSummaryDto>> getAllRoutes() {
+        List<PostSummaryDto> routes = travelPathService.getAllTravelPaths();
         return ApiResponse.success("전체 여행 경로 조회 성공", routes);
     }
 
-    @GetMapping(params = "region")
-    public ApiResponse<List<TravelPathDto>> getRecommendedRoutes(@RequestParam String region) {
-        List<TravelPathDto> routes = travelPathService.getRecommendedRoutes(region);
+    @GetMapping("/recommended")
+    public ApiResponse<List<List<MarkerSummaryDto>>> getRecommendedRoutes(
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam(defaultValue = "5") double radius
+    ) {
+        List<List<MarkerSummaryDto>> routes = travelPathService.getRecommendedRoutes(lat, lng, radius);
         return ApiResponse.success("추천 여행 경로 조회 성공", routes);
     }
 
