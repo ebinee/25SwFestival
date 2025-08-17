@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -26,12 +27,12 @@ public class CustomOauthService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         System.out.println("loadUser 시작");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         System.out.println("registraionId 받아오기 시작");
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        System.out.println("registraionId : "+registrationId + "usernameAttribute 받아오기 시작");
+        System.out.println("registraionId : " + registrationId + "usernameAttribute 받아오기 시작");
         String userNameAttribute = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
@@ -44,15 +45,15 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         System.out.println("email : " + email);
         System.out.println("registrationId : " + registrationId);
 
-        Optional<OAuthUser>oAuthUserOpt = oAuthUserRepository.findByProviderAndProviderId(registrationId, providerId);
+        Optional<OAuthUser> oAuthUserOpt = oAuthUserRepository.findByProviderAndProviderId(registrationId, providerId);
 
         User user;
-        if (oAuthUserOpt.isPresent()){
+        if (oAuthUserOpt.isPresent()) {
             user = oAuthUserOpt.get().getUser();
             System.out.println("찾았다!!!");
-        } else{
+        } else {
             user = userRepository.findByEmail(email).orElseGet(() ->
-                    userRepository.save( User.builder()
+                    userRepository.save(User.builder()
                             .email(email)
                             .username(attributes.getName())
                             .role("ROLE_USER")
@@ -61,7 +62,7 @@ public class CustomOauthService extends DefaultOAuth2UserService {
                             .gender(attributes.getGender())
                             .build()));
 
-            OAuthUser oAuthUser  = OAuthUser.builder()
+            OAuthUser oAuthUser = OAuthUser.builder()
                     .provider(registrationId)
                     .providerId(providerId)
                     .user(user)
@@ -74,10 +75,10 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         System.out.println("Attributes from OAuth provider: " + attributeMap);
 
 
-        return  new DefaultOAuth2User(
+        return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 attributeMap,
-               "email"
+                "email"
         );
 
     }
