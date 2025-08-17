@@ -6,7 +6,6 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 import com.springboot.be.dto.response.CommentDto;
 import com.springboot.be.dto.response.PhotoDetailDto;
-import com.springboot.be.dto.response.PhotoSummaryDto;
 import com.springboot.be.dto.response.PhotoUploadResponse;
 import com.springboot.be.entity.Photo;
 import com.springboot.be.entity.PhotoLike;
@@ -74,12 +73,6 @@ public class PhotoService {
         if (deleted > 0) {
             photo.decreaseLike();
         }
-    }
-
-    @Transactional(readOnly = true)
-    public List<PhotoSummaryDto> getFavoritePhotos(Long userId) {
-        return photoLikeRepository.findPhotoLikedByUser(userId)
-                .stream().map(PhotoSummaryDto::from).toList();
     }
 
     public List<PhotoUploadResponse> uploadImages(List<MultipartFile> images) {

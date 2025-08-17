@@ -11,6 +11,7 @@ public class PostCreateRequest {
 
     @Data
     public static class PhotoData {
+        private Long photoId;
         private String imageUrl;
         private String content;
         private String address;

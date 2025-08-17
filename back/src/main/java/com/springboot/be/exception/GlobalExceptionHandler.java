@@ -33,6 +33,13 @@ public class GlobalExceptionHandler {
         return ApiResponse.error(400, e.getMessage());
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handleForbiddenException(ForbiddenException e) {
+        return ApiResponse.error(403, e.getMessage());
+    }
+
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<?> handleException(Exception e) {

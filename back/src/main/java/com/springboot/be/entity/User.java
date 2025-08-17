@@ -69,4 +69,10 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
     }
+
+    public void setUserName(String username) {
+    }
+
+    public void setProfileImage(String profileImage) {
+    }
 }

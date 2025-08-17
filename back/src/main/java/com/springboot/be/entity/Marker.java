@@ -30,7 +30,7 @@ public class Marker {
         this.photoCount++;
     }
 
-    public void decreasePostCount() {
+    public void decreasePhotoCount() {
         if (this.photoCount > 0) this.photoCount--;
     }
 

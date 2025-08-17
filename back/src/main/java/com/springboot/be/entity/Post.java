@@ -41,5 +41,6 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Photo> photos = new ArrayList<>();
 
-
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private TravelPath travelPath;
 }

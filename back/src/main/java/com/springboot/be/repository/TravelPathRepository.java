@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TravelPathRepository extends JpaRepository<TravelPath, Long> {
     List<TravelPath> findRecommendedByRegion(String region);
+
+    void deleteByPostId(Long postId);
 }
