@@ -34,7 +34,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                        Authentication authentication) throws IOException{
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-        String email = (String)  oAuth2User.getAttribute("email");
+        String email = oAuth2User.getAttribute("email");
 
         User user = userRepository.findByEmail(email).orElseThrow();
 
@@ -55,7 +55,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 user.getEmail()
         );
 
-        //기존 브라우저에 response 띄우는 형식
+//        기존 브라우저에 response 띄우는 형식
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String responseBody = objectMapper.writeValueAsString(jwtResponse);
 //        response.getWriter().write(responseBody);

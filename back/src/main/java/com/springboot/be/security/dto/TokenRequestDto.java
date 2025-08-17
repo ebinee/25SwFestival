@@ -1,4 +1,4 @@
-package com.springboot.be.security;
+package com.springboot.be.security.dto;
 
 
 import lombok.NoArgsConstructor;

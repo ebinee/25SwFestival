@@ -3,6 +3,7 @@ package com.springboot.be.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 
@@ -32,8 +33,15 @@ public class RefreshEntity {
         this.expiryDate = expiryDate;
     }
 
-    public void updateToken(String newToken) {
+    public void updateToken(String newToken, LocalDateTime expiryDate) {
         this.token = newToken;
+        this.expiryDate = expiryDate;
+    }
+
+    public static RefreshEntity ofUserToken(User user, String token, LocalDateTime exp) {
+        RefreshEntity r = new RefreshEntity();
+        r.user = user; r.token = token; r.expiryDate = exp;
+        return r;
     }
 
 }

@@ -11,8 +11,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ResetTokenStore {
 
-    private final StringRedisTemplate redis;
     private static final String KEY_PREFIX = "pwrest: ";
+    private final StringRedisTemplate redis;
 
     public void save(String tokenHash, Long userId, Duration ttl) {
         String key = KEY_PREFIX + tokenHash;
@@ -22,7 +22,7 @@ public class ResetTokenStore {
     public Optional<Long> load(String tokenHash) {
         String key = KEY_PREFIX + tokenHash;
         String v = redis.opsForValue().get(key);
-        return (v==null) ? Optional.empty() : Optional.of(Long.valueOf(v));
+        return (v == null) ? Optional.empty() : Optional.of(Long.valueOf(v));
     }
 
     public void delete(String tokenHash) {

@@ -3,7 +3,7 @@ package com.springboot.be.dto.response;
 public class JwtResponse {
 
     private String accessToken;
-    private String refreshToken;
+    private final String refreshToken;
     private String type =  "Bearer";
     private Long id;
     private String username;

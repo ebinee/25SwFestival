@@ -14,11 +14,11 @@ public class OAuth2Attribute {
     public String provider;
     public String providerId;
     public String email;
-    private String name;
-    private LocalDate birthDate;
-    private String gender;
-    private Integer age;
-    private Map<String, Object> attributes;
+    private final String name;
+    private final LocalDate birthDate;
+    private final String gender;
+    private final Integer age;
+    private final Map<String, Object> attributes;
 
     private OAuth2Attribute(String provider, String providerId, String email, String name, LocalDate birthDate, String gender, Integer age, Map<String, Object> attributes) {
         this.provider = provider;

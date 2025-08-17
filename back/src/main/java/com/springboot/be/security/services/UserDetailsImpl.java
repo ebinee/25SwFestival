@@ -1,28 +1,29 @@
 package com.springboot.be.security.services;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.be.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
+
 //Spring Security가 로그인 이후 현재 로그인한 사용자의 정보를 저장/조회할때 사용
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private final Long id;
 
-    private String username;
+    private final String username;
 
-    private String email;
+    private final String email;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
     // 권한이 없으므로 비워 둠
-    private Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
+    private final Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
 
     public UserDetailsImpl(Long id, String username, String email, String password) {
         this.id = id;

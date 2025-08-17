@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MailService {
     private final JavaMailSender mailSender;
 
-    public void sendPasswordResetMail(String to, String link, int minutes){
+    public void sendPasswordResetMail(String to, String link, int minutes) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(to);
         msg.setSubject("Trippin 비밀번호 재설정 안내");

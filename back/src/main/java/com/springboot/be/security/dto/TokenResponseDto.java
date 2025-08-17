@@ -1,11 +1,11 @@
-package com.springboot.be.security;
+package com.springboot.be.security.dto;
 
 import lombok.Getter;
 
 @Getter
 public class TokenResponseDto {
-    private String accessToken;
-    private String refreshToken;
+    private final String accessToken;
+    private final String refreshToken;
 
     public TokenResponseDto(String accessToken, String refreshToken) {
         this.accessToken = accessToken;

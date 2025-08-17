@@ -1,4 +1,4 @@
-package com.springboot.be.security;
+package com.springboot.be.security.config;
 
 import com.springboot.be.security.jwt.AuthEntryPointJwt;
 import com.springboot.be.security.jwt.AuthTokenFilter;
@@ -6,7 +6,6 @@ import com.springboot.be.security.oauth2.CustomOauthService;
 import com.springboot.be.security.oauth2.OAuth2SuccessHandler;
 import com.springboot.be.security.services.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Configuration
