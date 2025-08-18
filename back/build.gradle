@@ -43,7 +43,7 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Jackson 사용 시
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
-
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

@@ -70,9 +70,15 @@ public class User {
         this.gender = gender;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
     }
 }
