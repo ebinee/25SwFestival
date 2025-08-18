@@ -17,9 +17,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ApiResponse<?> handleBadRequest(UnauthorizedException e) {
+    public ApiResponse<?> handleUnauthorizedException(UnauthorizedException e) {
         return ApiResponse.error(401, e.getMessage());
     }
+
+    @ExceptionHandler(FileStorageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handleFileStorageException(FileStorageException e) {
+        return ApiResponse.error(400, e.getMessage());
+    }
+
+    @ExceptionHandler(GeoCodingException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handleGeoCodingException(GeoCodingException e) {
+        return ApiResponse.error(400, e.getMessage());
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handleForbiddenException(ForbiddenException e) {
+        return ApiResponse.error(403, e.getMessage());
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

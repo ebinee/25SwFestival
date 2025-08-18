@@ -1,8 +1,6 @@
 package com.springboot.be.service;
 
 import com.springboot.be.dto.response.MarkerSummaryDto;
-import com.springboot.be.dto.response.TravelPathDto;
-import com.springboot.be.dto.response.TravelPathWithMarkersDto;
 import com.springboot.be.repository.TravelPathPointRepository;
 import com.springboot.be.repository.TravelPathRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,31 +14,15 @@ public class TravelPathService {
     private final TravelPathRepository travelPathRepository;
     private final TravelPathPointRepository travelPathPointRepository;
 
-    public List<TravelPathDto> getAllTravelPaths() {
-        return travelPathRepository.findAll()
+    public List<List<MarkerSummaryDto>> getRecommendedRoutes(double lat, double lng, double radius) {
+        return travelPathRepository.findRecommendedByLocation(lat, lng, radius)
                 .stream()
-                .map(TravelPathDto::from)
-                .toList();
-    }
-
-    public List<TravelPathDto> getRecommendedRoutes(String region) {
-        return travelPathRepository.findRecommendedByRegion(region)
-                .stream()
-                .map(TravelPathDto::from)
+                .limit(3)
+                .map(path -> travelPathPointRepository.findMarkerByTravelPath(path.getId()))
                 .toList();
     }
 
     public List<MarkerSummaryDto> getMarkersByRoute(Long routeId) {
         return travelPathPointRepository.findMarkerByTravelPath(routeId);
-    }
-
-    public List<TravelPathWithMarkersDto> getAllTravelPathsWithMarkers() {
-        return travelPathRepository.findAll().stream()
-                .map(path -> new TravelPathWithMarkersDto(
-                        path.getId(),
-                        path.getPathName(),
-                        travelPathPointRepository.findMarkerByTravelPath(path.getId())
-                ))
-                .toList();
     }
 }

@@ -2,9 +2,9 @@ package com.springboot.be.service;
 
 import com.springboot.be.dto.response.MarkerDetailDto;
 import com.springboot.be.dto.response.MarkerSummaryDto;
-import com.springboot.be.entity.GlobalPlace;
 import com.springboot.be.entity.Marker;
 import com.springboot.be.entity.Photo;
+import com.springboot.be.entity.PlaceInfo;
 import com.springboot.be.exception.NotFoundException;
 import com.springboot.be.exception.UnauthorizedException;
 import com.springboot.be.repository.*;
@@ -23,6 +23,7 @@ public class MarkerService {
     private final GlobalPlaceRepository globalPlaceRepository;
     private final PhotoLikeRepository photoLikeRepository;
     private final PhotoRepository photoRepository;
+    private final GeoCodingService geoCodingService;
 
     public List<MarkerSummaryDto> searchPlace(String keyword) {
         if (keyword == null || keyword.isBlank()) {
@@ -37,10 +38,9 @@ public class MarkerService {
     public List<MarkerSummaryDto> searchRegion(String region, Double lat, Double lng, Double radius) {
         // region 이름 기반 검색
         if (region != null && (lat == null || lng == null)) {
-            GlobalPlace place = globalPlaceRepository.findByPlaceNameContainingIgnoreCase(region)
-                    .orElseThrow(() -> new NotFoundException("해당 지역을 찾을 수 없습니다: " + region));
-            lat = place.getLatitude();
-            lng = place.getLongitude();
+            PlaceInfo geo = geoCodingService.forwardGeocoding(region);
+            lat = geo.getLatitude();
+            lng = geo.getLongitude();
         }
 
         // 좌표 기반 검색
@@ -52,7 +52,7 @@ public class MarkerService {
     }
 
     public List<MarkerSummaryDto> getPopularMarkers() {
-        return convertToDto(markerRepository.findTop10ByOrderByPostCountDesc());
+        return convertToDto(markerRepository.findTop10ByOrderByPhotoCountDesc());
     }
 
     public List<MarkerSummaryDto> getFavoriteMarkers(Long userId) {

@@ -9,4 +9,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @EntityGraph(attributePaths = "user")
     List<Comment> findByPhoto_IdOrderByCreatedAtAsc(Long photoId);
+
+    List<Comment> findByUserId(Long userId);
 }

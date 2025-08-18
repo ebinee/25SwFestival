@@ -18,7 +18,7 @@ public interface TravelPathPointRepository extends JpaRepository<TravelPathPoint
                             gp.placeName,
                             gp.latitude,
                             gp.longitude,
-                            m.postCount,
+                            m.photoCount,
                             tpp.sequence
                 )
                 FROM TravelPathPoint tpp

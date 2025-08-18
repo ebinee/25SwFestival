@@ -1,11 +1,13 @@
 package com.springboot.be.repository;
 
+import com.springboot.be.entity.GlobalPlace;
 import com.springboot.be.entity.Marker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MarkerRepository extends JpaRepository<Marker, Long> {
 
@@ -21,15 +23,8 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
             """, nativeQuery = true)
     List<Marker> findWithinRadius(@Param("lat") double lat, @Param("lng") double lng, @Param("radius") double radius);
 
-    List<Marker> findTop10ByOrderByPostCountDesc();
+    List<Marker> findTop10ByOrderByPhotoCountDesc();
 
-    @Query("""
-            SELECT DISTINCT m
-            FROM Marker m
-            JOIN TravelPathPoint tpp ON tpp.marker.id = m.id
-            WHERE tpp.travelPath.id = :travelPathId
-            ORDER BY tpp.sequence ASC
-            """)
-    List<Marker> findMarkerWithTravelPaths(@Param("travelPathId") Long travelPathId);
+    Optional<Marker> findByGlobalPlace(GlobalPlace globalPlace);
 
 }

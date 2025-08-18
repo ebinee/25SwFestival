@@ -4,13 +4,15 @@ import com.springboot.be.dto.common.ApiResponse;
 import com.springboot.be.dto.request.CommentCreateRequest;
 import com.springboot.be.dto.response.CommentDto;
 import com.springboot.be.dto.response.PhotoDetailDto;
-import com.springboot.be.dto.response.PhotoSummaryDto;
+import com.springboot.be.dto.response.PhotoUploadResponse;
 import com.springboot.be.security.services.UserDetailsImpl;
 import com.springboot.be.service.CommentService;
 import com.springboot.be.service.PhotoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,6 +39,20 @@ public class PhotoController {
         return ApiResponse.created("댓글 작성 성공", created);
     }
 
+    @DeleteMapping("/{photoId}/comments/{commentId}")
+    public ApiResponse<Void> deleteComment(
+            @PathVariable Long photoId,
+            @PathVariable Long commentId,
+            @AuthenticationPrincipal UserDetailsImpl me
+    ) {
+        commentService.deleteComment(photoId, commentId, me.getId());
+        return ApiResponse.success("댓글 삭제 성공");
+    }
+
+    public ResponseEntity<String> delete() {
+        return ResponseEntity.ok("");
+    }
+
     @PostMapping("/{photoId}/like")
     public ApiResponse<Void> likePhoto(
             @PathVariable Long photoId,
@@ -55,9 +71,9 @@ public class PhotoController {
         return ApiResponse.success("사진 좋아요 삭제 성공");
     }
 
-    @GetMapping("/favorite")
-    public ApiResponse<List<PhotoSummaryDto>> getFavoritePhotos(@AuthenticationPrincipal UserDetailsImpl user) {
-        List<PhotoSummaryDto> list = photoService.getFavoritePhotos(user.getId());
-        return ApiResponse.success("찜한 글 조회 성공", list);
+    @PostMapping("/upload")
+    public ApiResponse<List<PhotoUploadResponse>> uploadImages(@RequestParam("images") List<MultipartFile> images) {
+        List<PhotoUploadResponse> responses = photoService.uploadImages(images);
+        return ApiResponse.success("이미지 업로드 및 메타데이터 추출 성공", responses);
     }
 }

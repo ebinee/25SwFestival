@@ -56,15 +56,12 @@ public class User {
     private List<OAuthUser> oauthUsers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Marker> markers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
-    public User(String username,  String password, String email,String gender, LocalDate birthDate) {
+    public User(String username, String password, String email, String gender, LocalDate birthDate) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -72,6 +69,15 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public void setPassword(String encodedPassword) {
         this.password = encodedPassword;
     }

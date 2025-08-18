@@ -23,6 +23,11 @@ spring:
     redis:
       host: redis   # <-- compose 서비스 이름
       port: 6379
+      repositories:
+        enabled: false
+    jpa:
+      repositories:
+        enabled: true
 
   mail:
     host: smtp.gmail.com
@@ -34,7 +39,6 @@ spring:
           smtp:
             auth: true
             starttls.enable: true
-
 
   security:
     oauth2:
@@ -68,10 +72,10 @@ spring:
         provider:
 
           google:
-              authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
-              token-uri: https://oauth2.googleapis.com/token
-              user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-              user-name-attribute: sub
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
 
           naver:
             authorization_uri: https://nid.naver.com/oauth2.0/authorize
@@ -103,10 +107,13 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
-    com.springboot.be : DEBUG
+    com.springboot.be: DEBUG
 
 bezkoder:
   app:
     jwtSecret: "${JWT_SECRET}"
     jwtExpirationMs: 86400000
 
+google:
+  api:
+    key: "${GOOGLE_API_KEY}"
