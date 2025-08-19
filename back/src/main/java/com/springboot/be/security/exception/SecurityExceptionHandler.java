@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class SecurityExceptionHandler {
 
     record ErrorResponse(String code, String message) {}
 

@@ -39,7 +39,7 @@ public class UserService {
     public void updateUsername(Long userId, UsernameUpdateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다."));
-        user.setUserName(request.username());
+        user.setUsername(request.username());
     }
 
     @Transactional
