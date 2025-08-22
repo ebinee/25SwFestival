@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { Container } from "../../styles/GlobalStyles";
 import CustomText from "../../components/ui/CustomText";
 import { Block, Header, UserInfo, ProfileImage, UserName, IconGroup, IconImage } from '../../styles/write.ts';
-import heartIcon from '../../assets/images/icon/heart.png';
+import hearthinIcon from '../../assets/images/icon/hearthin.png';
 import chatIcon from '../../assets/images/icon/chat.png';
 import record from '../../assets/images/icon/record.png';
 import setting from '../../assets/images/icon/setting.png';
@@ -25,37 +25,28 @@ type Navigation = NativeStackNavigationProp<MyPageStackParam>;
   const posts = [
     {
       userName: '지윤아',
-      text: '대전에 있는 야구장에 갔다. 날이 더웠지만 맛있는 음식도 먹고 좋아하는 팀의 경기도 봐서 재밌었던 하루였다',
+      title: '인생 첫 대전 여행             ',
+      period: '2025-05-24 ~ 2025-05-27',
+      image: require('../../assets/images/data/sample_stadium.png'), 
     },
     {
       userName: '지윤아',
-      text: '깔끔한 맛과 분위기가 좋아 자주 가는 맛집입니다.',
+      title: '당일치기 여행',
+      period: '2025-05-24 ~ 2025-05-27',
+      image: require('../../assets/images/data/sample_stadium.png'), 
     },
     {
       userName: '지윤아',
-      text: '한 입 먹는 순간 인상이 바뀌는 집. 재료 본연의 맛이 살아 있어서 자극적이지 않다.',
-    },
-    {
-    userName: '민수',
-    text: '서울숲에 다녀왔는데 날씨가 너무 좋아서 사진도 많이 찍고 힐링하고 왔다.',
-    },
-    {
-      userName: '지윤아',
-      text: '친구 추천으로 간 카페, 분위기가 아늑해서 공부하기 딱 좋았다.',
-    },
-    {
-      userName: '현우',
-      text: '어제 본 영화가 생각보다 재밌어서 두 번 더 보고 싶다.',
-    },
-    {
-      userName: '소연',
-      text: '부산 해운대에서 일몰을 봤는데 진짜 그림 같았다.',
+      title: '인생 첫 대전 여행',
+      period: '2025-05-24 ~ 2025-05-27',
+      image: require('../../assets/images/data/sample_stadium.png'), 
     },
     {
       userName: '지윤아',
-      text: '새로 오픈한 라멘집 갔는데 국물이 진하고 면도 탱글해서 만족스러웠다.',
+      title: '인생 첫 대전 여행',
+      period: '2025-05-24 ~ 2025-05-27',
+      image: require('../../assets/images/data/sample_stadium.png'), 
     },
-
   ];
 
 
@@ -75,54 +66,100 @@ const MyPageScreen = () => {
         </ProfileInfo>
       </Header>
 
+      <Divider />
+
       {/* 아이콘 3개 */}
     <IconRow>
       <IconItem>
         <FloatingButtonWrapper>
-          <IconButton icon={setting} size={35} color={colors.white} onPress={() => navigation.navigate('InfoEditScreen')} />
+          <IconButton icon={setting} size={35} onPress={() => navigation.navigate('InfoEditScreen')} />
         </FloatingButtonWrapper>
         <CustomText style={{ marginTop: 6, fontSize: 13 }}>설정</CustomText>
       </IconItem>
 
       <IconItem>
         <FloatingButtonWrapper>
-          <IconButton icon={heartIcon} size={35} color={colors.white} onPress={() => navigation.navigate('LikedScreen')} />
+          <IconButton icon={hearthinIcon} size={35}  onPress={() => navigation.navigate('LikedScreen')} />
         </FloatingButtonWrapper>
         <CustomText style={{ marginTop: 6, fontSize: 13 }}>좋아요</CustomText>
       </IconItem>
 
       <IconItem>
         <FloatingButtonWrapper>
-          <IconButton icon={record} size={35} color={colors.white} />
+          <IconButton icon={record} size={35} onPress={() => navigation.navigate('RouteScreen')} />
         </FloatingButtonWrapper>
         <CustomText style={{ marginTop: 6, fontSize: 13 }}>내 여행기록</CustomText>
       </IconItem>
     </IconRow>
 
+    <Divider />
+
       {/* 피드 */}
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView showsVerticalScrollIndicator={false}>
       {posts.map((post, idx) => (
+        // <Block key={idx}>
+        
+        //   <Header>
+        //     <UserInfo >
+        //       <ProfileImage />
+        //       <UserName>{post.userName}</UserName>
+        //     </UserInfo>
+        //   </Header>
+
+        //   <UserName
+        //     style={{ marginTop: 16, fontWeight: 'normal', fontSize: 16 }}
+        //   >
+        //     {post.text}
+        //   </UserName>
+
+        // </Block>
         <Block key={idx}>
           <Header>
-            <UserInfo >
+            <UserInfo>
               <ProfileImage />
               <UserName>{post.userName}</UserName>
             </UserInfo>
           </Header>
 
-          <UserName
-            style={{ marginTop: 16, fontWeight: 'normal', fontSize: 16 }}
-          >
-            {post.text}
-          </UserName>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
+            <View>
+              <CustomText weight="900" style={{ fontSize: 20, fontWeight: 'bold' }}>
+                {post.title}
+              </CustomText>
+              <Divider />
+              <CustomText style={{ fontSize: 13, }}>
+                {post.period}
+              </CustomText>
+            </View>
 
-          <IconGroup style={{ marginTop: 12 }}>
-            <IconImage source={heartIcon} />
-            <IconImage source={chatIcon} />
-          </IconGroup>
+          <View style={{ width: 100, height: 100, position: 'relative', marginLeft: 12 }}>
+            <Image
+              source={post.image}
+              style={{ width: '100%', height: '100%',  }}
+              resizeMode="cover"
+            />
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 7,
+                right: 8,
+                backgroundColor: 'rgba(255,255,255,0.85)',
+                borderRadius: 7,
+                paddingHorizontal: 10,
+                paddingVertical: 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <CustomText style={{ fontSize: 9, color: colors.gray8}}>
+                1/4
+              </CustomText>
+            </View>
+          </View>
+
+
+          </View>
         </Block>
+
       ))}
     </ScrollView>
 
@@ -154,6 +191,22 @@ const IconRow = styled.View`
   margin-top: 10px;
 `;
 
+const IconItem = styled.View`
+  flex-direction: column;
+  align-items: center;
+  margin-left: 25px;
+  margin-right: 25px
+`;
+
+  // 버튼 컨테이너
+const FloatingButtonContainer = styled.View`
+  position: absolute;
+  bottom: 8px;
+  right: 30px;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const FloatingButtonWrapper = styled.View`
   background-color:  ${colors.blue};
   width: 60px;
@@ -163,9 +216,10 @@ const FloatingButtonWrapper = styled.View`
   align-items: center;
   margin-bottom: 8px; 
 `;
-const IconItem = styled.View`
-  flex-direction: column;
-  align-items: center;
-  margin-left: 25px;
-  margin-right: 25px
+const Divider = styled.View`
+  height: .7px;
+  background-color: ${colors.gray2};
+  width: 100%;
+  margin-bottom: 15px; 
+  margin-top: 15px; 
 `;
