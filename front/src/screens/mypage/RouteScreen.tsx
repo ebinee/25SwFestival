@@ -10,12 +10,7 @@ import { colors } from '../../styles/colors';
 import chatIcon from '../../assets/images/icon/chat.png';
 import { HeaderRow, IconCircle } from './InfoEditScreen.tsx'
 import IconButton from '../../components/buttons/IconButton';
-import heart from '../../assets/images/icon/hearthin.png';
-import { TouchableOpacity } from 'react-native';
-import EachPostScreen from './EachPostScreen'; 
-import {PostType, MyPageStackParam } from './MyPageStack.tsx'
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
+import record from '../../assets/images/icon/record.png';
 
 
 
@@ -45,8 +40,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 
-const LikedScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<MyPageStackParam>>();
+const RouteScreen = () => {
 
 return (
     <Container>
@@ -57,24 +51,18 @@ return (
 
         <FloatingButtonContainer>
           <FloatingButtonWrapper>
-            <IconButton icon={heart} size={25}  />
+            <IconButton icon={record} size={25}  />
           </FloatingButtonWrapper>
         </FloatingButtonContainer>
 
 
-            좋아요
+            내 여행기록
             </CustomText>
         </HeaderRow>
 
 {/* 포스트 */}
         {posts.map((post, idx) => (
-        <TouchableOpacity
-          key={idx}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('EachPostScreen', { post })} // ← 클릭 시 이동!
-        >
-
-        <Block key={idx} >
+        <Block key={idx}>
             <Header>
             <UserInfo>
                 <ProfileImage />
@@ -110,8 +98,6 @@ return (
 
 
         </Block>
-      </TouchableOpacity>
-
     ))}
     </ScrollView>
 
@@ -149,4 +135,4 @@ const Divider = styled.View`
 `;
 
 
-export default LikedScreen;
+export default RouteScreen;

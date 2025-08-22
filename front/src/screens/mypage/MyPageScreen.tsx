@@ -86,7 +86,7 @@ const MyPageScreen = () => {
 
       <IconItem>
         <FloatingButtonWrapper>
-          <IconButton icon={record} size={35} />
+          <IconButton icon={record} size={35} onPress={() => navigation.navigate('RouteScreen')} />
         </FloatingButtonWrapper>
         <CustomText style={{ marginTop: 6, fontSize: 13 }}>내 여행기록</CustomText>
       </IconItem>
