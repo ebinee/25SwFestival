@@ -26,15 +26,20 @@ const TabNavigator = () => {
       screenOptions={({ route }): BottomTabNavigationOptions => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colors.gray5,
+          backgroundColor: '#ffffffff',
           height: 110,
           paddingTop: 10,
           borderTopWidth: 1,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           overflow: 'hidden',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -20 },
+          shadowOpacity: 0.13,
+          shadowRadius: 14,
+          elevation: 17,
         },
-        tabBarActiveTintColor: colors.gray8,
+        tabBarActiveTintColor: '#70CDF2',
         tabBarInactiveTintColor: '#aaa',
         tabBarIcon: ({ focused }) => {
           let icon;
@@ -53,7 +58,7 @@ const TabNavigator = () => {
               style={{
                 width: 33,
                 height: 33,
-                tintColor: focused ? colors.gray8 : '#aaa',
+                tintColor: focused ? '#70CDF2' : '#aaa',
               }}
               resizeMode="contain"
             />
@@ -65,14 +70,14 @@ const TabNavigator = () => {
         name="Home"
         component={HomeStack}
         options={{
-          tabBarLabel: renderLabel('홈'),
+          tabBarLabel: renderLabel('Home'),
         }}
       />
       <Tab.Screen
         name="FriendStack"
         component={FriendStack}
         options={{
-          tabBarLabel: renderLabel('친구'),
+          tabBarLabel: renderLabel('Friend'),
         }}
       />
 
@@ -80,7 +85,7 @@ const TabNavigator = () => {
         name="MyPageStack"
         component={MyPageStack}
         options={{
-          tabBarLabel: renderLabel('마이'),
+          tabBarLabel: renderLabel('My'),
         }}
       />
     </Tab.Navigator>

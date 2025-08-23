@@ -10,9 +10,9 @@ interface WrapperProps {
 export const PrimaryWrapper = styled(Pressable)<WrapperProps>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   width: 100%;
-  height: 62px;
-  padding: 19px 0;
-  border-radius: 20px;
+  height: 55px;
+  padding: 10px 0;
+  border-radius: 50px;
   justify-content: center;
   align-items: center;
 `;

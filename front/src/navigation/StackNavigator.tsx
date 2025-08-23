@@ -4,10 +4,14 @@ import Onboarding from '../screens/onboarding/Onboarding';
 import TabNavigator from './TabNavigator';
 import CustomText from '../components/ui/CustomText';
 import { colors } from '../styles/colors';
+import SignUp from '../screens/onboarding/SignUp';
+import FindAccount from '../screens/onboarding/FindAccount';
 
 export type RootStackParamList = {
-  Onboarding: undefined;
+  Onboarding: undefined; 
   Main: undefined;
+  SignUp: undefined;
+  FindAccount : undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,6 +40,16 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Main"
         component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FindAccount"
+        component={FindAccount}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
