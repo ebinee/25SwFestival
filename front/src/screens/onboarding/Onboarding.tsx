@@ -45,7 +45,7 @@ const Onboarding = () => {
           title="로그인"
           color={colors.Blue || '#B7D8FF'}
           onPress={() => {
-            
+            navigation.navigate('Main');
           }}
           style={{ marginTop: 50, marginBottom: 70 }}
         />
