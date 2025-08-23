@@ -59,4 +59,4 @@ jobs:
         run: cd back && chmod +x ./gradlew
 
       - name: Build and Test
-        run: cd back && ./gradlew clean build --no-daemon
+        run: cd back && ./gradlew clean build --no-daemon -Dspring.profiles.active=test
