@@ -1,0 +1,33 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: "trippin-cluster"
+  region: ap-northeast-2
+  version: "1.30"   # 최신 안정 버전 권장
+
+vpc:
+  id: "vpc-0d5dafba82402bc3a"   # 네 VPC ID
+  subnets:
+    public:
+      ap-northeast-2a: { id: "subnet-0653a25c5a2386514" }
+      ap-northeast-2b: { id: "subnet-01fa583cd65b366f6" }
+    private:
+      ap-northeast-2a: { id: "subnet-0be5f0eaf14990622" }
+      ap-northeast-2b: { id: "subnet-0226443c49d3cb64d" }
+
+nodeGroups:
+  - name: trippin-ng
+    instanceType: t3.small # micro 쓰면 너무 적을 것 같아서 small 사용
+    desiredCapacity: 2
+    subnets:
+      - subnet-0653a25c5a2386514
+      - subnet-01fa583cd65b366f6
+    minSize: 1
+    maxSize: 3
+    amiFamily: AmazonLinux2
+    iam:
+      withAddonPolicies:
+        albIngress: true        # ALB Controller 연동
+        autoScaler: true        # Cluster Autoscaler 연동
+        imageBuilder: true      # ECR 빌드 관련
