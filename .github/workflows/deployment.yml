@@ -25,7 +25,7 @@ jobs:
       - name: Build, Tag, and Push Docker image
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com
-          ECR_REPOSITORY: backend-service
+          ECR_REPOSITORY: trippin-backend
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd back
